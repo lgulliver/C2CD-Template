@@ -24,7 +24,17 @@
     },
     "trolleyAPIKey": {
       "type": "securestring"
+    },
+    "dockerRegistryUrl": {
+      "type": "string"
+    },
+    "dockerRegistryUsername": {
+      "type": "string"
+    },
+    "dockerRegistryPassword": {
+      "type": "securestring"
     }
+
   },
   "variables": {
     "webFrontEndName": "web",
@@ -67,7 +77,9 @@
 		"tier": "Basic",
         "name": "B1"
       },
-      "dependsOn": [],
+      "dependsOn": [
+			"[resourceId('Microsoft.Web/serverfarmsj', concat(parameters('customPrefix'), '-', variables('trolleyName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]"
+	  ],
       "tags": {
         "displayName": "inventoryAppServicePlan"
       },
@@ -88,7 +100,10 @@
 		"tier": "Basic",
         "name": "B1"
       },
-      "dependsOn": [],
+      "dependsOn": [
+		"[resourceId('Microsoft.Web/serverfarmsj', concat(parameters('customPrefix'), '-', variables('trolleyName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
+		"[resourceId('Microsoft.Web/serverfarmsj', concat(parameters('customPrefix'), '-', variables('inventoryName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]"
+	  ],
       "tags": {
         "displayName": "purchaseAppServicePlan"
       },
@@ -109,7 +124,11 @@
 		"tier": "Basic",
         "name": "B1"
       },
-      "dependsOn": [],
+      "dependsOn": [
+			"[resourceId('Microsoft.Web/serverfarmsj', concat(parameters('customPrefix'), '-', variables('trolleyName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
+			"[resourceId('Microsoft.Web/serverfarmsj', concat(parameters('customPrefix'), '-', variables('inventoryName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
+			"[resourceId('Microsoft.Web/serverfarmsj', concat(parameters('customPrefix'), '-', variables('purchaseName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
+	  ],
       "tags": {
         "displayName": "webFrontEndAppServicePlan"
       },
@@ -148,12 +167,17 @@
             "displayName": "frontEndSettings"
           },
           "properties": {
-            "PurchaseAPI": "concat('http://',parameters('customPrefix'), variables('purchaseName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/')",
-            "InventoryAPI": "concat('http://',parameters('customPrefix'), variables('inventoryName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/'))",
-            "TrolleyAPI": "concat('http://',parameters('customPrefix'), variables('trolleyName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/'))",
-            "PurchaseAPIKey": "parameters('purchaseAPIKey')",
-            "InventoryAPIKey": "parameters('inventoryAPIKey')",
-            "TrolleyAPIKey": "parameters('trolleyAPIKey')"
+            "WEBSITES_ENABLE_APP_SERVICE_STORAGE": "false",
+            "DOCKER_CUSTOM_IMAGE_NAME": "",
+            "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryUrl')]",
+            "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
+            "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
+            "PurchaseAPI": "[concat('http://',parameters('customPrefix'), variables('purchaseName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/')]",
+            "InventoryAPI": "[concat('http://',parameters('customPrefix'), variables('inventoryName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/')]",
+            "TrolleyAPI": "[concat('http://',parameters('customPrefix'), variables('trolleyName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/')]",
+            "PurchaseAPIKey": "[parameters('purchaseAPIKey')]",
+            "InventoryAPIKey": "[parameters('inventoryAPIKey')]",
+            "TrolleyAPIKey": "[parameters('trolleyAPIKey')]"
           }
         }
       ]
@@ -186,11 +210,16 @@
             "displayName": "purchaseSettings"
           },
           "properties": {
-            "MyAPIKey": "parameters('purchaseAPIKey')",
-            "TrolleyAPIKey": "parameters('trolleyAPIKey')",
-            "InventoryAPIKey": "parameters('inventoryAPIKey')",
-            "InventoryAPI": "concat('http://',parameters('customPrefix'), variables('inventoryName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/'))",
-            "TrolleyAPI": "concat('http://',parameters('customPrefix'), variables('trolleyName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/'))",
+            "WEBSITES_ENABLE_APP_SERVICE_STORAGE": "false",
+            "DOCKER_CUSTOM_IMAGE_NAME": "",
+            "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryUrl')]",
+            "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
+            "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
+            "MyAPIKey": "[parameters('purchaseAPIKey')]",
+            "TrolleyAPIKey": "[parameters('trolleyAPIKey')]",
+            "InventoryAPIKey": "[parameters('inventoryAPIKey')]",
+            "InventoryAPI": "[concat('http://',parameters('customPrefix'), variables('inventoryName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/')]",
+            "TrolleyAPI": "[concat('http://',parameters('customPrefix'), variables('trolleyName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/')]",
             "SendGridAPIKey": "[parameters('sendGridAPIKey')]"
           }
         }
@@ -225,7 +254,12 @@
             "displayName": "inventorySettings"
           },
           "properties": {
-            "myAPIKey": "parameters('inventoryAPIKey')",
+            "WEBSITES_ENABLE_APP_SERVICE_STORAGE": "false",
+            "DOCKER_CUSTOM_IMAGE_NAME": "",
+            "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryUrl')]",
+            "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
+            "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
+            "myAPIKey": "[parameters('inventoryAPIKey')]",
             "storageConnectionString": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', concat(parameters('customPrefix'), variables('inventoryName'), variables('storageName'), parameters('environmentSuffix'))), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
           }
         }
@@ -260,7 +294,12 @@
             "displayName": "trolleySettings"
           },
           "properties": {
-            "myAPIKey": "parameters('trolleyAPIKey')",
+            "WEBSITES_ENABLE_APP_SERVICE_STORAGE": "false",
+            "DOCKER_CUSTOM_IMAGE_NAME": "",
+            "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryUrl')]",
+            "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
+            "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
+            "myAPIKey": "[parameters('trolleyAPIKey')]",
             "storageConnectionString": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', concat(parameters('customPrefix'), variables('trolleyName'), variables('storageName'), parameters('environmentSuffix'))), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
           }
         }

@@ -1,0 +1,290 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmentSuffix": {
+      "type": "string",
+      "minLength": 3,
+      "maxLenght": 3,
+      "default": "dev"
+    },
+    "customPrefix": {
+      "type": "string",
+      "maxLenght": 4,
+      "default": "wine"
+    },
+    "sendGridAPIKey": {
+      "type": "securestring"
+    },
+    "purchaseAPIKey": {
+      "type": "securestring"
+    },
+    "inventoryAPIKey": {
+      "type": "securestring"
+    },
+    "trolleyAPIKey": {
+      "type": "securestring"
+    }
+  },
+  "variables": {
+    "webFrontEndName": "web",
+    "purchaseName": "pur",
+    "inventoryName": "inv",
+    "trolleyName": "tro",
+    "appServiceName":  "apps",
+    "webAppName": "serv",
+    "storageName": "stor"
+  },
+  "resources": [
+    {
+      "name": "[concat(parameters('customPrefix'), '-', variables('trolleyName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "kind": "linux",
+      "sku": {
+        "name": "B1"
+      },
+      "dependsOn": [],
+      "tags": {
+        "displayName": "trolleyAppServicePlan"
+      },
+      "properties": {
+        "name": "[concat(parameters('customPrefix'), '-', variables('trolleyName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
+        "numberOfWorkers": 1
+      }
+    },
+    {
+      "name": "[concat(parameters('customPrefix'), '-', variables('inventoryName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "kind": "linux",
+      "sku": {
+        "name": "B1"
+      },
+      "dependsOn": [],
+      "tags": {
+        "displayName": "inventoryAppServicePlan"
+      },
+      "properties": {
+        "name": "[concat(parameters('customPrefix'), '-', variables('inventoryName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
+        "numberOfWorkers": 1
+      }
+    },
+    ".",
+    {
+      "name": "[concat(parameters('customPrefix'), '-', variables('purchaseName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "kind": "linux",
+      "sku": {
+        "name": "B1"
+      },
+      "dependsOn": [],
+      "tags": {
+        "displayName": "purchaseAppServicePlan"
+      },
+      "properties": {
+        "name": "[concat(parameters('customPrefix'), '-', variables('purchaseName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
+        "numberOfWorkers": 1
+      }
+    },
+    {
+      "name": "[concat(parameters('customPrefix'), '-', variables('webFrontEndName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "kind": "linux",
+      "sku": {
+        "name": "B1"
+      },
+      "dependsOn": [],
+      "tags": {
+        "displayName": "webFrontEndAppServicePlan"
+      },
+      "properties": {
+        "name": "[concat(parameters('customPrefix'), '-', variables('webFrontEndName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
+        "numberOfWorkers": 1
+      }
+    },
+    {
+      "name": "[concat(parameters('customPrefix'), variables('webFrontEndName'), variables('webAppName'), parameters('environmentSuffix'))]",
+      "type": "Microsoft.Web/sites",
+      "kind": "app,linux",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('webFrontEndName'), '-', variables('appServiceName'), parameters('environmentSuffix')))]"
+      ],
+      "tags": {
+        "displayName": "webFrontEndService"
+      },
+      "properties": {
+        "name": "[concat(parameters('customPrefix'), variables('webFrontEndName'), variables('webAppName'), parameters('environmentSuffix'))]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('webFrontEndName'), '-', variables('appServiceName'), parameters('environmentSuffix')))]"
+      },
+      "resources": [
+        {
+          "name": "appsettings",
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', concat(parameters('customPrefix'), variables('webFrontEndName'), variables('webAppName'), parameters('environmentSuffix')))]"
+          ],
+          "tags": {
+            "displayName": "frontEndSettings"
+          },
+          "properties": {
+            "PurchaseAPI": "concat('http://',parameters('customPrefix'), variables('purchaseName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/')",
+            "InventoryAPI": "concat('http://',parameters('customPrefix'), variables('inventoryName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/'))",
+            "TrolleyAPI": "concat('http://',parameters('customPrefix'), variables('trolleyName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/'))",
+            "PurchaseAPIKey": "parameters('purchaseAPIKey')",
+            "InventoryAPIKey": "parameters('inventoryAPIKey')",
+            "TrolleyAPIKey": "parameters('trolleyAPIKey')"
+          }
+        }
+      ]
+    },
+    {
+      "name": "[concat(parameters('customPrefix'), variables('purchaseName'), variables('webAppName'), parameters('environmentSuffix'))]",
+      "type": "Microsoft.Web/sites",
+      "kind": "app,linux",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('purchaseName'), '-', variables('appServiceName'), parameters('environmentSuffix')))]"
+      ],
+      "tags": {
+        "displayName": "purchaseService"
+      },
+      "properties": {
+        "name": "[concat(parameters('customPrefix'), variables('purchaseName'), variables('webAppName'), parameters('environmentSuffix'))]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('purchaseName'), '-', variables('appServiceName'), parameters('environmentSuffix')))]"
+      },
+      "resources": [
+        {
+          "name": "appsettings",
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', concat(parameters('customPrefix'), variables('purchaseName'), variables('webAppName'), parameters('environmentSuffix')))]"
+          ],
+          "tags": {
+            "displayName": "purchaseSettings"
+          },
+          "properties": {
+            "MyAPIKey": "parameters('purchaseAPIKey')",
+            "TrolleyAPIKey": "parameters('trolleyAPIKey')",
+            "InventoryAPIKey": "parameters('inventoryAPIKey')",
+            "InventoryAPI": "concat('http://',parameters('customPrefix'), variables('inventoryName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/'))",
+            "TrolleyAPI": "concat('http://',parameters('customPrefix'), variables('trolleyName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/'))",
+            "SendGridAPIKey": "[parameters('sendGridAPIKey')]"
+          }
+        }
+      ]
+    },
+    {
+      "name": "[concat(parameters('customPrefix'), variables('inventoryName'), variables('webAppName'), parameters('environmentSuffix'))]",
+      "type": "Microsoft.Web/sites",
+      "kind": "app,linux",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('inventoryName'), '-', variables('appServiceName'), parameters('environmentSuffix')))]",
+        "[resourceId('Microsoft.Storage/storageAccounts', concat(parameters('customPrefix'), variables('inventoryName'), variables('storageName'), parameters('environmentSuffix')))]"
+      ],
+      "tags": {
+        "displayName": "inventoryService"
+      },
+      "properties": {
+        "name": "[concat(parameters('customPrefix'), variables('inventoryName'), variables('webAppName'), parameters('environmentSuffix'))]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('inventoryName'), '-', variables('appServiceName'), parameters('environmentSuffix')))]"
+      },
+      "resources": [
+        {
+          "name": "appsettings",
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', concat(parameters('customPrefix'), variables('inventoryName'), variables('webAppName'), parameters('environmentSuffix')))]"
+          ],
+          "tags": {
+            "displayName": "inventorySettings"
+          },
+          "properties": {
+            "myAPIKey": "parameters('inventoryAPIKey')",
+            "storageConnectionString": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', concat(parameters('customPrefix'), variables('inventoryName'), variables('storageName'), parameters('environmentSuffix'))), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
+          }
+        }
+      ]
+    },
+    {
+      "name": "[concat(parameters('customPrefix'), variables('trolleyName'), variables('webAppName'), parameters('environmentSuffix'))]",
+      "type": "Microsoft.Web/sites",
+      "kind": "app,linux",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('trolleyName'), '-', variables('appServiceName'), parameters('environmentSuffix')))]",
+        "[resourceId('Microsoft.Storage/storageAccounts', concat(parameters('customPrefix'), variables('trolleyName'), variables('storageName'), parameters('environmentSuffix')))]"
+      ],
+      "tags": {
+        "displayName": "trolleyService"
+      },
+      "properties": {
+        "name": "[concat(parameters('customPrefix'), variables('trolleyName'), variables('webAppName'), parameters('environmentSuffix'))]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('trolleyName'), '-', variables('appServiceName'), parameters('environmentSuffix')))]"
+      },
+      "resources": [
+        {
+          "name": "appsettings",
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', concat(parameters('customPrefix'), variables('trolleyName'), variables('webAppName'), parameters('environmentSuffix')))]"
+          ],
+          "tags": {
+            "displayName": "trolleySettings"
+          },
+          "properties": {
+            "myAPIKey": "parameters('trolleyAPIKey')",
+            "storageConnectionString": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', concat(parameters('customPrefix'), variables('trolleyName'), variables('storageName'), parameters('environmentSuffix'))), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
+          }
+        }
+      ]
+    },
+    {
+      "name": "[concat(parameters('customPrefix'), variables('trolleyName'), variables('storageName'), parameters('environmentSuffix'))]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2016-01-01",
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "dependsOn": [],
+      "tags": {
+        "displayName": "trolleyStorageAccount"
+      },
+      "kind": "Storage"
+    },
+    {
+      "name": "[concat(parameters('customPrefix'), variables('inventoryName'), variables('storageName'), parameters('environmentSuffix'))]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2016-01-01",
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "dependsOn": [],
+      "tags": {
+        "displayName": "inventoryStorageAccount"
+      },
+      "kind": "Storage"
+    }
+
+  ],
+    "outputs": {
+    }
+}

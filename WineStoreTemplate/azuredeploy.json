@@ -78,7 +78,7 @@
         "name": "B1"
       },
       "dependsOn": [
-			"[resourceId('Microsoft.Web/serverfarmsj', concat(parameters('customPrefix'), '-', variables('trolleyName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]"
+			"[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('trolleyName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]"
 	  ],
       "tags": {
         "displayName": "inventoryAppServicePlan"
@@ -101,8 +101,8 @@
         "name": "B1"
       },
       "dependsOn": [
-		"[resourceId('Microsoft.Web/serverfarmsj', concat(parameters('customPrefix'), '-', variables('trolleyName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
-		"[resourceId('Microsoft.Web/serverfarmsj', concat(parameters('customPrefix'), '-', variables('inventoryName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]"
+		"[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('trolleyName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
+		"[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('inventoryName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]"
 	  ],
       "tags": {
         "displayName": "purchaseAppServicePlan"
@@ -125,9 +125,9 @@
         "name": "B1"
       },
       "dependsOn": [
-			"[resourceId('Microsoft.Web/serverfarmsj', concat(parameters('customPrefix'), '-', variables('trolleyName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
-			"[resourceId('Microsoft.Web/serverfarmsj', concat(parameters('customPrefix'), '-', variables('inventoryName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
-			"[resourceId('Microsoft.Web/serverfarmsj', concat(parameters('customPrefix'), '-', variables('purchaseName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]"
+			"[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('trolleyName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
+			"[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('inventoryName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
+			"[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('purchaseName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]"
 	  ],
       "tags": {
         "displayName": "webFrontEndAppServicePlan"

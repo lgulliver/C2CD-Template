@@ -127,7 +127,7 @@
       "dependsOn": [
 			"[resourceId('Microsoft.Web/serverfarmsj', concat(parameters('customPrefix'), '-', variables('trolleyName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
 			"[resourceId('Microsoft.Web/serverfarmsj', concat(parameters('customPrefix'), '-', variables('inventoryName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
-			"[resourceId('Microsoft.Web/serverfarmsj', concat(parameters('customPrefix'), '-', variables('purchaseName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
+			"[resourceId('Microsoft.Web/serverfarmsj', concat(parameters('customPrefix'), '-', variables('purchaseName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]"
 	  ],
       "tags": {
         "displayName": "webFrontEndAppServicePlan"

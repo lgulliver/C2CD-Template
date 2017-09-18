@@ -172,9 +172,9 @@
             "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryUrl')]",
             "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
             "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
-            "PurchaseAPI": "[concat('http://',parameters('customPrefix'), variables('purchaseName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/')]",
-            "InventoryAPI": "[concat('http://',parameters('customPrefix'), variables('inventoryName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/')]",
-            "TrolleyAPI": "[concat('http://',parameters('customPrefix'), variables('trolleyName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/')]",
+            "PurchaseAPI": "[concat('http://',parameters('customPrefix'), variables('purchaseName'), variables('webAppName'), parameters('environmentSuffix'), '.azurewebsites.net/')]",
+            "InventoryAPI": "[concat('http://',parameters('customPrefix'), variables('inventoryName'), variables('webAppName'), parameters('environmentSuffix'), '.azurewebsites.net/')]",
+            "TrolleyAPI": "[concat('http://',parameters('customPrefix'), variables('trolleyName'), variables('webAppName'), parameters('environmentSuffix'), '.azurewebsites.net/')]",
             "PurchaseAPIKey": "[parameters('purchaseAPIKey')]",
             "InventoryAPIKey": "[parameters('inventoryAPIKey')]",
             "TrolleyAPIKey": "[parameters('trolleyAPIKey')]"
@@ -218,8 +218,8 @@
             "MyAPIKey": "[parameters('purchaseAPIKey')]",
             "TrolleyAPIKey": "[parameters('trolleyAPIKey')]",
             "InventoryAPIKey": "[parameters('inventoryAPIKey')]",
-            "InventoryAPI": "[concat('http://',parameters('customPrefix'), variables('inventoryName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/')]",
-            "TrolleyAPI": "[concat('http://',parameters('customPrefix'), variables('trolleyName'), variables('webAppName'), parameters('environmentSuffix'), 'azurewebsites.net/')]",
+            "InventoryAPI": "[concat('http://',parameters('customPrefix'), variables('inventoryName'), variables('webAppName'), parameters('environmentSuffix'), '.azurewebsites.net/')]",
+            "TrolleyAPI": "[concat('http://',parameters('customPrefix'), variables('trolleyName'), variables('webAppName'), parameters('environmentSuffix'), '.azurewebsites.net/')]",
             "SendGridAPIKey": "[parameters('sendGridAPIKey')]"
           }
         }

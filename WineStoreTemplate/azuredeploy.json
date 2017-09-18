@@ -43,6 +43,7 @@
       "apiVersion": "2015-08-01",
       "kind": "linux",
       "sku": {
+		"tier": "Basic",
         "name": "B1"
       },
       "dependsOn": [],
@@ -51,7 +52,9 @@
       },
       "properties": {
         "name": "[concat(parameters('customPrefix'), '-', variables('trolleyName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
-        "numberOfWorkers": 1
+        "numberOfWorkers": 1,
+		"reserved", true,
+		"workerSizeId": "0"
       }
     },
     {
@@ -61,6 +64,7 @@
       "apiVersion": "2015-08-01",
       "kind": "linux",
       "sku": {
+		"tier": "Basic",
         "name": "B1"
       },
       "dependsOn": [],
@@ -69,7 +73,9 @@
       },
       "properties": {
         "name": "[concat(parameters('customPrefix'), '-', variables('inventoryName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
-        "numberOfWorkers": 1
+        "numberOfWorkers": 1,
+		"reserved", true,
+		"workerSizeId": "0"
       }
     },
     {
@@ -79,6 +85,7 @@
       "apiVersion": "2015-08-01",
       "kind": "linux",
       "sku": {
+		"tier": "Basic",
         "name": "B1"
       },
       "dependsOn": [],
@@ -87,7 +94,9 @@
       },
       "properties": {
         "name": "[concat(parameters('customPrefix'), '-', variables('purchaseName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
-        "numberOfWorkers": 1
+        "numberOfWorkers": 1,
+		"reserved", true,
+		"workerSizeId": "0"
       }
     },
     {
@@ -97,6 +106,7 @@
       "apiVersion": "2015-08-01",
       "kind": "linux",
       "sku": {
+		"tier": "Basic",
         "name": "B1"
       },
       "dependsOn": [],
@@ -105,7 +115,9 @@
       },
       "properties": {
         "name": "[concat(parameters('customPrefix'), '-', variables('webFrontEndName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
-        "numberOfWorkers": 1
+        "numberOfWorkers": 1,
+		"reserved": true,
+		"workerSizeId": "0"
       }
     },
     {

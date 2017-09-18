@@ -6,12 +6,12 @@
       "type": "string",
       "minLength": 3,
       "maxLength": 3,
-      "default": "dev"
+      "defaultValue": "dev"
     },
     "customPrefix": {
       "type": "string",
       "maxLength": 4,
-      "default": "wine"
+      "defaultValue": "wine"
     },
     "sendGridAPIKey": {
       "type": "securestring"

@@ -5,12 +5,12 @@
     "environmentSuffix": {
       "type": "string",
       "minLength": 3,
-      "maxLenght": 3,
+      "maxLength": 3,
       "default": "dev"
     },
     "customPrefix": {
       "type": "string",
-      "maxLenght": 4,
+      "maxLength": 4,
       "default": "wine"
     },
     "sendGridAPIKey": {
@@ -72,7 +72,6 @@
         "numberOfWorkers": 1
       }
     },
-    ".",
     {
       "name": "[concat(parameters('customPrefix'), '-', variables('purchaseName'), '-', variables('appServiceName'), parameters('environmentSuffix'))]",
       "type": "Microsoft.Web/serverfarms",

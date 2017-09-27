@@ -260,7 +260,7 @@
             "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
             "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
             "myAPIKey": "[parameters('inventoryAPIKey')]",
-            "storageConnectionString": "[concat(‘DefaultEndpointsProtocol=https;AccountName=', concat(parameters('customPrefix'), variables('inventoryName'), variables('storageName'), parameters('environmentSuffix')), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', concat(parameters('customPrefix'), variables('inventoryName'), variables('storageName'), parameters('environmentSuffix'))), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value, ‘;EndpointSuffix=core.windows.net’)]"
+            "storageConnectionString": "[concat('DefaultEndpointsProtocol=https;AccountName=', concat(parameters('customPrefix'), variables('inventoryName'), variables('storageName'), parameters('environmentSuffix')), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', concat(parameters('customPrefix'), variables('inventoryName'), variables('storageName'), parameters('environmentSuffix'))), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value, ';EndpointSuffix=core.windows.net')]"
           }
         }
       ]
@@ -300,7 +300,7 @@
             "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
             "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
             "myAPIKey": "[parameters('trolleyAPIKey')]",
-            "storageConnectionString": "[concat(‘DefaultEndpointsProtocol=https;AccountName=', concat(parameters('customPrefix'), variables('trolleyName'), variables('storageName'), parameters('environmentSuffix')), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', concat(parameters('customPrefix'), variables('trolleyName'), variables('storageName'), parameters('environmentSuffix'))), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value, ‘;EndpointSuffix=core.windows.net’)]"
+            "storageConnectionString": "[concat('DefaultEndpointsProtocol=https;AccountName=', concat(parameters('customPrefix'), variables('trolleyName'), variables('storageName'), parameters('environmentSuffix')), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', concat(parameters('customPrefix'), variables('trolleyName'), variables('storageName'), parameters('environmentSuffix'))), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value, ';EndpointSuffix=core.windows.net')]"
           }
         }
       ]

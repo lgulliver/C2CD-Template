@@ -10,7 +10,7 @@
     },
     "customPrefix": {
       "type": "string",
-      "maxLength": 4,
+      "maxLength": 10,
       "defaultValue": "wine"
     },
     "sendGridAPIKey": {
@@ -260,7 +260,7 @@
             "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
             "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
             "myAPIKey": "[parameters('inventoryAPIKey')]",
-            "storageConnectionString": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', concat(parameters('customPrefix'), variables('inventoryName'), variables('storageName'), parameters('environmentSuffix'))), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
+            "storageConnectionString": "[concat(‘DefaultEndpointsProtocol=https;AccountName=', concat(parameters('customPrefix'), variables('inventoryName'), variables('storageName'), parameters('environmentSuffix')), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', concat(parameters('customPrefix'), variables('inventoryName'), variables('storageName'), parameters('environmentSuffix'))), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value, ‘;EndpointSuffix=core.windows.net’)]"
           }
         }
       ]
@@ -300,7 +300,7 @@
             "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
             "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
             "myAPIKey": "[parameters('trolleyAPIKey')]",
-            "storageConnectionString": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', concat(parameters('customPrefix'), variables('trolleyName'), variables('storageName'), parameters('environmentSuffix'))), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
+            "storageConnectionString": "[concat(‘DefaultEndpointsProtocol=https;AccountName=', concat(parameters('customPrefix'), variables('trolleyName'), variables('storageName'), parameters('environmentSuffix')), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', concat(parameters('customPrefix'), variables('trolleyName'), variables('storageName'), parameters('environmentSuffix'))), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value, ‘;EndpointSuffix=core.windows.net’)]"
           }
         }
       ]

@@ -168,7 +168,6 @@
           },
           "properties": {
             "WEBSITES_ENABLE_APP_SERVICE_STORAGE": "false",
-            "DOCKER_CUSTOM_IMAGE_NAME": "",
             "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryUrl')]",
             "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
             "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
@@ -211,7 +210,6 @@
           },
           "properties": {
             "WEBSITES_ENABLE_APP_SERVICE_STORAGE": "false",
-            "DOCKER_CUSTOM_IMAGE_NAME": "",
             "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryUrl')]",
             "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
             "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
@@ -255,7 +253,6 @@
           },
           "properties": {
             "WEBSITES_ENABLE_APP_SERVICE_STORAGE": "false",
-            "DOCKER_CUSTOM_IMAGE_NAME": "",
             "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryUrl')]",
             "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
             "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",
@@ -295,7 +292,6 @@
           },
           "properties": {
             "WEBSITES_ENABLE_APP_SERVICE_STORAGE": "false",
-            "DOCKER_CUSTOM_IMAGE_NAME": "",
             "DOCKER_REGISTRY_SERVER_URL": "[parameters('dockerRegistryUrl')]",
             "DOCKER_REGISTRY_SERVER_USERNAME": "[parameters('dockerRegistryUsername')]",
             "DOCKER_REGISTRY_SERVER_PASSWORD": "[parameters('dockerRegistryPassword')]",

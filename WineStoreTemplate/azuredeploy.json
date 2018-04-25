@@ -4,14 +4,11 @@
   "parameters": {
     "environmentSuffix": {
       "type": "string",
-      "minLength": 3,
-      "maxLength": 3,
       "defaultValue": "dev"
     },
     "customPrefix": {
       "type": "string",
-      "maxLength": 10,
-      "defaultValue": "wine"
+      "maxLength": 10
     },
     "sendGridAPIKey": {
       "type": "securestring"
@@ -97,13 +94,13 @@
       "apiVersion": "2015-08-01",
       "kind": "linux",
       "sku": {
-		"tier": "Basic",
+		  "tier": "Basic",
         "name": "B1"
       },
       "dependsOn": [
-		"[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('trolleyName'), '-', variables('appServiceName'), parameters('environmentSuffix')))]",
-		"[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('inventoryName'), '-', variables('appServiceName'), parameters('environmentSuffix')))]"
-	  ],
+		  "[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('trolleyName'), '-', variables('appServiceName'), parameters('environmentSuffix')))]",
+		  "[resourceId('Microsoft.Web/serverfarms', concat(parameters('customPrefix'), '-', variables('inventoryName'), '-', variables('appServiceName'), parameters('environmentSuffix')))]"
+	    ],
       "tags": {
         "displayName": "purchaseAppServicePlan"
       },
